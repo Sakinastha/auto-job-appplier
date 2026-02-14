@@ -1,0 +1,35 @@
+/Users/sakina/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+
+======================================================================
+  INDEED AUTO-APPLIER BOT - SMART EDITION
+======================================================================
+
+  NEW FEATURES:
+  - FULLY AUTOMATIC: No manual Y/N approval needed
+  - ALL JOBS: Applies to Easy Apply + External applications
+  - SMART FORMS: Handles Workday, Greenhouse, Lever, iCIMS, etc.
+  - AUTO ACCOUNTS: Uses LinkedIn/Google sign-in or creates accounts
+  - MULTI-STEP: Navigates multi-page application forms
+  - CAPTCHA SKIP: Detects captchas, logs for manual follow-up
+
+  Requirements:
+  1. Python 3 installed
+  2. Required packages: pip3 install selenium undetected-chromedriver
+  3. Resume path configured correctly
+
+  Resume path: /Users/sakina/Downloads/Sakina_Shrestha_resume.pdf
+  Status: Resume file FOUND
+
+  Previous session found: 1 apps done today
+  Session will resume from where you left off
+
+======================================================================
+  WARNING: This bot will automatically apply to ALL matching jobs!
+  Press Ctrl+C at any time to stop the bot.
+======================================================================
+
+  Start AUTOMATIC job application? (y/n): Traceback (most recent call last):
+  File "/Users/sakina/Documents/Projects/auto_job_applier/indeed_auto_applier.py", line 2529, in <module>
+    proceed = input("\n  Start AUTOMATIC job application? (y/n): ").strip().lower()
+EOFError: EOF when reading a line

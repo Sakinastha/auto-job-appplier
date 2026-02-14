@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quick Fill - Job Applications</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            color: white;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        h1 { color: #64ffda; margin-bottom: 5px; }
+        .subtitle { color: #888; margin-bottom: 30px; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        .field {
+            background: #16213e;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        .field:hover {
+            border-color: #64ffda;
+            transform: translateY(-2px);
+        }
+        .field:active {
+            transform: scale(0.98);
+        }
+        .field-label {
+            font-size: 12px;
+            color: #64ffda;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        .field-value {
+            font-size: 16px;
+            color: #fff;
+            word-break: break-all;
+        }
+        .copied {
+            background: #64ffda !important;
+            color: #1a1a2e !important;
+        }
+        .copied .field-label,
+        .copied .field-value {
+            color: #1a1a2e !important;
+        }
+        .instructions {
+            background: rgba(100, 255, 218, 0.1);
+            border-left: 4px solid #64ffda;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 0 8px 8px 0;
+        }
+        .instructions p { margin-bottom: 10px; color: #ccc; }
+        .instructions strong { color: #64ffda; }
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #64ffda;
+            color: #1a1a2e;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            display: none;
+            animation: pop 0.3s ease;
+        }
+        @keyframes pop {
+            0% { transform: translateX(-50%) scale(0.8); opacity: 0; }
+            100% { transform: translateX(-50%) scale(1); opacity: 1; }
+        }
+        h2 { color: #64ffda; margin: 30px 0 15px 0; font-size: 18px; }
+    </style>
+</head>
+<body>
+    <h1>Quick Fill</h1>
+    <p class="subtitle">Click any field to copy it, then paste into job applications</p>
+
+    <div class="instructions">
+        <p><strong>How to use:</strong></p>
+        <p>1. Keep this tab open</p>
+        <p>2. Open a job application in another tab</p>
+        <p>3. Click a field here to copy it</p>
+        <p>4. Click in the application form field and press <strong>Cmd + V</strong> to paste</p>
+    </div>
+
+    <h2>Personal Info</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'Sakina Shrestha')">
+            <div class="field-label">Full Name</div>
+            <div class="field-value">Sakina Shrestha</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Sakina')">
+            <div class="field-label">First Name</div>
+            <div class="field-value">Sakina</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Shrestha')">
+            <div class="field-label">Last Name</div>
+            <div class="field-value">Shrestha</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'sashr5@morgan.edu')">
+            <div class="field-label">Email</div>
+            <div class="field-value">sashr5@morgan.edu</div>
+        </div>
+        <div class="field" onclick="copyText(this, '6673048390')">
+            <div class="field-label">Phone</div>
+            <div class="field-value">6673048390</div>
+        </div>
+        <div class="field" onclick="copyText(this, '667-304-8390')">
+            <div class="field-label">Phone (Formatted)</div>
+            <div class="field-value">667-304-8390</div>
+        </div>
+    </div>
+
+    <h2>Address</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, '2 E Joppa Rd, Apt 1170')">
+            <div class="field-label">Street Address</div>
+            <div class="field-value">2 E Joppa Rd, Apt 1170</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Towson')">
+            <div class="field-label">City</div>
+            <div class="field-value">Towson</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'MD')">
+            <div class="field-label">State</div>
+            <div class="field-value">MD</div>
+        </div>
+        <div class="field" onclick="copyText(this, '21286')">
+            <div class="field-label">Zip Code</div>
+            <div class="field-value">21286</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'United States')">
+            <div class="field-label">Country</div>
+            <div class="field-value">United States</div>
+        </div>
+    </div>
+
+    <h2>Education</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'Morgan State University')">
+            <div class="field-label">University</div>
+            <div class="field-value">Morgan State University</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Bachelor of Science in Computer Science')">
+            <div class="field-label">Degree</div>
+            <div class="field-value">Bachelor of Science in Computer Science</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Computer Science')">
+            <div class="field-label">Major</div>
+            <div class="field-value">Computer Science</div>
+        </div>
+        <div class="field" onclick="copyText(this, '3.96')">
+            <div class="field-label">GPA</div>
+            <div class="field-value">3.96</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'December 2025')">
+            <div class="field-label">Graduation Date</div>
+            <div class="field-value">December 2025</div>
+        </div>
+        <div class="field" onclick="copyText(this, '2025')">
+            <div class="field-label">Graduation Year</div>
+            <div class="field-value">2025</div>
+        </div>
+    </div>
+
+    <h2>Links</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'https://www.linkedin.com/in/sakina-shrestha-474775273/')">
+            <div class="field-label">LinkedIn</div>
+            <div class="field-value">linkedin.com/in/sakina-shrestha-474775273</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'https://SakinaShrestha111.github.io')">
+            <div class="field-label">Portfolio</div>
+            <div class="field-value">SakinaShrestha111.github.io</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'https://github.com/Sakinastha')">
+            <div class="field-label">GitHub</div>
+            <div class="field-value">github.com/Sakinastha</div>
+        </div>
+    </div>
+
+    <h2>Work Experience</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, '2')">
+            <div class="field-label">Years of Experience</div>
+            <div class="field-value">2</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Research Assistant')">
+            <div class="field-label">Current Title</div>
+            <div class="field-value">Research Assistant</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Morgan State University')">
+            <div class="field-label">Current Company</div>
+            <div class="field-value">Morgan State University</div>
+        </div>
+        <div class="field" onclick="copyText(this, '70000')">
+            <div class="field-label">Salary Expectation</div>
+            <div class="field-value">70000</div>
+        </div>
+    </div>
+
+    <h2>Work Authorization (F-1 OPT)</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'Yes')">
+            <div class="field-label">Authorized to Work in US?</div>
+            <div class="field-value">Yes</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'No')">
+            <div class="field-label">Need Sponsorship Now?</div>
+            <div class="field-value">No</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Yes')">
+            <div class="field-label">Need Future Sponsorship?</div>
+            <div class="field-value">Yes</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Immediately')">
+            <div class="field-label">Start Date</div>
+            <div class="field-value">Immediately</div>
+        </div>
+    </div>
+
+    <h2>Demographics (EEO Questions)</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'Female')">
+            <div class="field-label">Gender</div>
+            <div class="field-value">Female</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Asian')">
+            <div class="field-label">Race</div>
+            <div class="field-value">Asian</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Not Hispanic or Latino')">
+            <div class="field-label">Ethnicity</div>
+            <div class="field-value">Not Hispanic or Latino</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'No')">
+            <div class="field-label">Veteran Status</div>
+            <div class="field-value">No</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'I am not a protected veteran')">
+            <div class="field-label">Veteran (Long)</div>
+            <div class="field-value">I am not a protected veteran</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'No, I do not have a disability')">
+            <div class="field-label">Disability</div>
+            <div class="field-value">No, I do not have a disability</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'I do not wish to answer')">
+            <div class="field-label">Prefer Not to Say</div>
+            <div class="field-value">I do not wish to answer</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Decline to self-identify')">
+            <div class="field-label">Decline Option</div>
+            <div class="field-value">Decline to self-identify</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Heterosexual')">
+            <div class="field-label">Sexual Orientation</div>
+            <div class="field-value">Heterosexual</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Straight')">
+            <div class="field-label">Sexual Orientation (Alt)</div>
+            <div class="field-value">Straight</div>
+        </div>
+    </div>
+
+    <h2>Programming Languages</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'Python, Java, JavaScript, Kotlin, HTML, CSS, SQL')">
+            <div class="field-label">All Languages</div>
+            <div class="field-value">Python, Java, JavaScript, Kotlin, HTML, CSS, SQL</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Python')">
+            <div class="field-label">Python</div>
+            <div class="field-value">Python</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Java')">
+            <div class="field-label">Java</div>
+            <div class="field-value">Java</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'JavaScript')">
+            <div class="field-label">JavaScript</div>
+            <div class="field-value">JavaScript</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Kotlin')">
+            <div class="field-label">Kotlin</div>
+            <div class="field-value">Kotlin</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'SQL')">
+            <div class="field-label">SQL</div>
+            <div class="field-value">SQL</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'HTML/CSS')">
+            <div class="field-label">HTML/CSS</div>
+            <div class="field-value">HTML/CSS</div>
+        </div>
+    </div>
+
+    <h2>Frontend</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'React, Vite, Material-UI')">
+            <div class="field-label">All Frontend</div>
+            <div class="field-value">React, Vite, Material-UI</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'React')">
+            <div class="field-label">React</div>
+            <div class="field-value">React</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Vite')">
+            <div class="field-label">Vite</div>
+            <div class="field-value">Vite</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Material-UI')">
+            <div class="field-label">Material-UI</div>
+            <div class="field-value">Material-UI</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Jetpack Compose')">
+            <div class="field-label">Jetpack Compose</div>
+            <div class="field-value">Jetpack Compose</div>
+        </div>
+    </div>
+
+    <h2>Backend & APIs</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'Flask, FastAPI, PHP, REST APIs')">
+            <div class="field-label">All Backend</div>
+            <div class="field-value">Flask, FastAPI, PHP, REST APIs</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Flask')">
+            <div class="field-label">Flask</div>
+            <div class="field-value">Flask</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'FastAPI')">
+            <div class="field-label">FastAPI</div>
+            <div class="field-value">FastAPI</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'PHP')">
+            <div class="field-label">PHP</div>
+            <div class="field-value">PHP</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'REST APIs')">
+            <div class="field-label">REST APIs</div>
+            <div class="field-value">REST APIs</div>
+        </div>
+    </div>
+
+    <h2>Machine Learning & Data</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'scikit-learn, Pandas, NumPy, OpenCV, TensorFlow, PyTorch, LangChain')">
+            <div class="field-label">All ML/Data</div>
+            <div class="field-value">scikit-learn, Pandas, NumPy, OpenCV, TensorFlow, PyTorch, LangChain</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'scikit-learn')">
+            <div class="field-label">scikit-learn</div>
+            <div class="field-value">scikit-learn</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Pandas')">
+            <div class="field-label">Pandas</div>
+            <div class="field-value">Pandas</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'NumPy')">
+            <div class="field-label">NumPy</div>
+            <div class="field-value">NumPy</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'TensorFlow')">
+            <div class="field-label">TensorFlow</div>
+            <div class="field-value">TensorFlow</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'PyTorch')">
+            <div class="field-label">PyTorch</div>
+            <div class="field-value">PyTorch</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'OpenCV')">
+            <div class="field-label">OpenCV</div>
+            <div class="field-value">OpenCV</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'LangChain')">
+            <div class="field-label">LangChain</div>
+            <div class="field-value">LangChain</div>
+        </div>
+    </div>
+
+    <h2>Tools & Infrastructure</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'Git, Docker, AWS (EC2, S3, Lambda), MySQL, PostgreSQL, Firebase, Pinecone, Android Studio, VSCode')">
+            <div class="field-label">All Tools</div>
+            <div class="field-value">Git, Docker, AWS, MySQL, PostgreSQL, Firebase, Pinecone, Android Studio, VSCode</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Git')">
+            <div class="field-label">Git</div>
+            <div class="field-value">Git</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Docker')">
+            <div class="field-label">Docker</div>
+            <div class="field-value">Docker</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'AWS')">
+            <div class="field-label">AWS</div>
+            <div class="field-value">AWS</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'AWS (EC2, S3, Lambda)')">
+            <div class="field-label">AWS (Detailed)</div>
+            <div class="field-value">AWS (EC2, S3, Lambda)</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'MySQL')">
+            <div class="field-label">MySQL</div>
+            <div class="field-value">MySQL</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'PostgreSQL')">
+            <div class="field-label">PostgreSQL</div>
+            <div class="field-value">PostgreSQL</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Firebase')">
+            <div class="field-label">Firebase</div>
+            <div class="field-value">Firebase</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Pinecone')">
+            <div class="field-label">Pinecone</div>
+            <div class="field-value">Pinecone</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Android Studio')">
+            <div class="field-label">Android Studio</div>
+            <div class="field-value">Android Studio</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'VS Code')">
+            <div class="field-label">VS Code</div>
+            <div class="field-value">VS Code</div>
+        </div>
+    </div>
+
+    <h2>Skills & Concepts</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'NLP, RAG, LLMs, MVVM, Agile/Scrum, Data Visualization')">
+            <div class="field-label">All Concepts</div>
+            <div class="field-value">NLP, RAG, LLMs, MVVM, Agile/Scrum, Data Visualization</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Machine Learning')">
+            <div class="field-label">Machine Learning</div>
+            <div class="field-value">Machine Learning</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Natural Language Processing')">
+            <div class="field-label">NLP</div>
+            <div class="field-value">Natural Language Processing</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Large Language Models (LLMs)')">
+            <div class="field-label">LLMs</div>
+            <div class="field-value">Large Language Models (LLMs)</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Retrieval-Augmented Generation (RAG)')">
+            <div class="field-label">RAG</div>
+            <div class="field-value">Retrieval-Augmented Generation (RAG)</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Data Visualization')">
+            <div class="field-label">Data Visualization</div>
+            <div class="field-value">Data Visualization</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Agile/Scrum')">
+            <div class="field-label">Agile/Scrum</div>
+            <div class="field-value">Agile/Scrum</div>
+        </div>
+    </div>
+
+    <!-- EXPERIENCE 1: Research Assistant - AI Chatbot -->
+    <h2>Experience 1: Research Assistant - AI Chatbot</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'Research Assistant')">
+            <div class="field-label">Job Title</div>
+            <div class="field-value">Research Assistant</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Morgan State University')">
+            <div class="field-label">Company</div>
+            <div class="field-value">Morgan State University</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Baltimore, MD')">
+            <div class="field-label">Location</div>
+            <div class="field-value">Baltimore, MD</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Jan 2025')">
+            <div class="field-label">Start Date</div>
+            <div class="field-value">Jan 2025</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Present')">
+            <div class="field-label">End Date</div>
+            <div class="field-value">Present</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Jan 2025 - Present')">
+            <div class="field-label">Duration</div>
+            <div class="field-value">Jan 2025 - Present</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Built a full-stack RAG chatbot with Vite/React frontend and Python FastAPI backend, deployed on AWS EC2 via Docker Compose. Integrated OpenAI Embeddings via LangChain and Pinecone for semantic search; implemented secure login using JWT + MySQL.')">
+            <div class="field-label">Job Description</div>
+            <div class="field-value">Built a full-stack RAG chatbot with Vite/React frontend and Python FastAPI backend...</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Built a full-stack RAG chatbot with Vite/React frontend and Python FastAPI backend, deployed on AWS EC2 via Docker Compose')">
+            <div class="field-label">Responsibility 1</div>
+            <div class="field-value">Built a full-stack RAG chatbot with Vite/React frontend and Python FastAPI backend</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Integrated OpenAI Embeddings via LangChain and Pinecone for semantic search')">
+            <div class="field-label">Responsibility 2</div>
+            <div class="field-value">Integrated OpenAI Embeddings via LangChain and Pinecone for semantic search</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Implemented secure login using JWT + MySQL authentication')">
+            <div class="field-label">Responsibility 3</div>
+            <div class="field-value">Implemented secure login using JWT + MySQL authentication</div>
+        </div>
+    </div>
+
+    <!-- EXPERIENCE 2: Quantum Research -->
+    <h2>Experience 2: Research Assistant - Quantum Computing</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'Research Assistant')">
+            <div class="field-label">Job Title</div>
+            <div class="field-value">Research Assistant</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Morgan State University')">
+            <div class="field-label">Company</div>
+            <div class="field-value">Morgan State University</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Baltimore, MD')">
+            <div class="field-label">Location</div>
+            <div class="field-value">Baltimore, MD</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Aug 2024')">
+            <div class="field-label">Start Date</div>
+            <div class="field-value">Aug 2024</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Dec 2024')">
+            <div class="field-label">End Date</div>
+            <div class="field-value">Dec 2024</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Aug 2024 - Dec 2024')">
+            <div class="field-label">Duration</div>
+            <div class="field-value">Aug 2024 - Dec 2024</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Conducted experiments using quED interferometers (MI, HOM) to analyze photon entanglement and validate Bell inequality. Explored foundational quantum principles and their applications in next-gen computing systems.')">
+            <div class="field-label">Job Description</div>
+            <div class="field-value">Conducted quantum physics experiments using quED interferometers...</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Conducted experiments using quED interferometers to analyze photon entanglement and validate Bell inequality')">
+            <div class="field-label">Responsibility 1</div>
+            <div class="field-value">Conducted experiments using quED interferometers to analyze photon entanglement</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Explored foundational quantum principles and their applications in next-gen computing systems')">
+            <div class="field-label">Responsibility 2</div>
+            <div class="field-value">Explored quantum principles and their applications in next-gen computing</div>
+        </div>
+    </div>
+
+    <!-- EXPERIENCE 3: Teaching Assistant -->
+    <h2>Experience 3: Teaching Assistant</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'Teaching Assistant')">
+            <div class="field-label">Job Title</div>
+            <div class="field-value">Teaching Assistant</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Morgan State University')">
+            <div class="field-label">Company</div>
+            <div class="field-value">Morgan State University</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Baltimore, MD')">
+            <div class="field-label">Location</div>
+            <div class="field-value">Baltimore, MD</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Sep 2025')">
+            <div class="field-label">Start Date</div>
+            <div class="field-value">Sep 2025</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Present')">
+            <div class="field-label">End Date</div>
+            <div class="field-value">Present</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Sep 2025 - Present')">
+            <div class="field-label">Duration</div>
+            <div class="field-value">Sep 2025 - Present</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Teaching Assistant for COSC 458: Software Engineering. Graded lab assignments, exams, and project submissions for a 30+ student class. Provided one-on-one support during lab sessions and held weekly office hours for tutoring.')">
+            <div class="field-label">Job Description</div>
+            <div class="field-value">TA for Software Engineering - graded assignments, held office hours...</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Graded lab assignments, exams, and project submissions for a 30+ student class')">
+            <div class="field-label">Responsibility 1</div>
+            <div class="field-value">Graded lab assignments, exams, and project submissions for 30+ students</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Provided one-on-one support during lab sessions and held weekly office hours for tutoring')">
+            <div class="field-label">Responsibility 2</div>
+            <div class="field-value">Provided one-on-one support and held weekly office hours for tutoring</div>
+        </div>
+    </div>
+
+    <!-- EXPERIENCE 4: CEAMLS AI Research Intern -->
+    <h2>Experience 4: Summer AI Research Intern</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'Summer AI Research Intern')">
+            <div class="field-label">Job Title</div>
+            <div class="field-value">Summer AI Research Intern</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'CEAMLS AI Research Institute')">
+            <div class="field-label">Company</div>
+            <div class="field-value">CEAMLS AI Research Institute</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Remote')">
+            <div class="field-label">Location</div>
+            <div class="field-value">Remote</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'May 2024')">
+            <div class="field-label">Start Date</div>
+            <div class="field-value">May 2024</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Aug 2024')">
+            <div class="field-label">End Date</div>
+            <div class="field-value">Aug 2024</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'May 2024 - Aug 2024')">
+            <div class="field-label">Duration</div>
+            <div class="field-value">May 2024 - Aug 2024</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Built machine learning models to predict lung cancer using transcriptomic data from 1,249 tumor samples. Applied SMOTE for data balancing and selected key biomarkers via Random Forest. Designed ensemble learning pipelines, improving predictive accuracy from 85% to 98%.')">
+            <div class="field-label">Job Description</div>
+            <div class="field-value">Built ML models for lung cancer prediction using transcriptomic data...</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Built machine learning models to predict lung cancer using transcriptomic data from 1,249 tumor samples')">
+            <div class="field-label">Responsibility 1</div>
+            <div class="field-value">Built ML models to predict lung cancer using 1,249 tumor samples</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Applied SMOTE for data balancing and selected key biomarkers (e.g., COL10A1) via Random Forest')">
+            <div class="field-label">Responsibility 2</div>
+            <div class="field-value">Applied SMOTE for data balancing and selected key biomarkers via Random Forest</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Designed and evaluated ensemble learning pipelines, improving predictive accuracy from 85% to 98%')">
+            <div class="field-label">Responsibility 3</div>
+            <div class="field-value">Improved predictive accuracy from 85% to 98% with ensemble learning</div>
+        </div>
+    </div>
+
+    <!-- EXPERIENCE 5: BVCC Venture Fellow -->
+    <h2>Experience 5: Student Venture Fellow</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'Student Venture Fellow')">
+            <div class="field-label">Job Title</div>
+            <div class="field-value">Student Venture Fellow</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'BVCC Black Venture Program - Morgan State University')">
+            <div class="field-label">Company</div>
+            <div class="field-value">BVCC Black Venture Program - Morgan State University</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Baltimore, MD')">
+            <div class="field-label">Location</div>
+            <div class="field-value">Baltimore, MD</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Aug 2023')">
+            <div class="field-label">Start Date</div>
+            <div class="field-value">Aug 2023</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Dec 2023')">
+            <div class="field-label">End Date</div>
+            <div class="field-value">Dec 2023</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Aug 2023 - Dec 2023')">
+            <div class="field-label">Duration</div>
+            <div class="field-value">Aug 2023 - Dec 2023</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Gained hands-on experience in entrepreneurship, venture capital, and startup development through a semester-long cohort program. Learned core concepts in startup financing, product-market fit, business modeling, and go-to-market strategies.')">
+            <div class="field-label">Job Description</div>
+            <div class="field-value">Hands-on experience in entrepreneurship, venture capital, and startups...</div>
+        </div>
+    </div>
+
+    <!-- PROJECT 1: AI Chatbot Mobile App -->
+    <h2>Project 1: AI Chatbot Mobile App</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'AI Chatbot Mobile App')">
+            <div class="field-label">Project Name</div>
+            <div class="field-value">AI Chatbot Mobile App</div>
+        </div>
+        <div class="field" onclick="copyText(this, '2025')">
+            <div class="field-label">Year</div>
+            <div class="field-value">2025</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Developed an Android chatbot application using Kotlin and Jetpack Compose with Firebase authentication, real-time chat history, and profile management. Integrated OpenAI GPT-4 API and built Python FastAPI backend to scrape and integrate DegreeWorks curriculum data for personalized academic assistance. Implemented secure user authentication with Firebase, Cloud Firestore for data persistence, and real-time typing indicators.')">
+            <div class="field-label">Description</div>
+            <div class="field-value">Android chatbot with Kotlin, Jetpack Compose, Firebase, GPT-4 integration...</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Kotlin, Jetpack Compose, Firebase, OpenAI GPT-4, Python, FastAPI, Cloud Firestore')">
+            <div class="field-label">Technologies</div>
+            <div class="field-value">Kotlin, Jetpack Compose, Firebase, OpenAI GPT-4, Python, FastAPI</div>
+        </div>
+    </div>
+
+    <!-- PROJECT 2: Grocery Store Web Application -->
+    <h2>Project 2: Grocery Store Web Application</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'Grocery Store Web Application')">
+            <div class="field-label">Project Name</div>
+            <div class="field-value">Grocery Store Web Application</div>
+        </div>
+        <div class="field" onclick="copyText(this, '2025')">
+            <div class="field-label">Year</div>
+            <div class="field-value">2025</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Designed an intuitive, mobile-first grocery shopping experience using Figma and HTML/CSS. Built secure login, user favorites, shopping cart, and purchase history functionality using PHP/MySQL. Implemented real-time category-based filtering, dynamic checkout, and session management to simulate full e-commerce operations.')">
+            <div class="field-label">Description</div>
+            <div class="field-value">Mobile-first e-commerce app with secure login, cart, PHP/MySQL backend...</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Figma, HTML, CSS, PHP, MySQL, JavaScript')">
+            <div class="field-label">Technologies</div>
+            <div class="field-value">Figma, HTML, CSS, PHP, MySQL, JavaScript</div>
+        </div>
+    </div>
+
+    <!-- PROJECT 3: Baltimore City Homicide Dashboard -->
+    <h2>Project 3: Baltimore City Homicide Dashboard</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'Baltimore City Homicide Dashboard')">
+            <div class="field-label">Project Name</div>
+            <div class="field-value">Baltimore City Homicide Dashboard</div>
+        </div>
+        <div class="field" onclick="copyText(this, '2025')">
+            <div class="field-label">Year</div>
+            <div class="field-value">2025</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Developed a fully interactive R Shiny dashboard that automatically scrapes and visualizes 5 years of Baltimore City homicide data using rvest and polite. Implemented dynamic filters (year, month, age, district, weapon, keyword search), time-series trends, monthly heatmaps, cause-of-death analysis, and surveillance camera impact visualization. Built searchable/exportable data table with DT package and fully containerized the app using Docker for one-command deployment.')">
+            <div class="field-label">Description</div>
+            <div class="field-value">Interactive R Shiny dashboard for crime data visualization, Docker deployment...</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'R, R Shiny, rvest, ggplot2, DT, Docker')">
+            <div class="field-label">Technologies</div>
+            <div class="field-value">R, R Shiny, rvest, ggplot2, DT, Docker</div>
+        </div>
+    </div>
+
+    <!-- HONORS & AWARDS -->
+    <h2>Honors & Awards</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'Dean\'s List, Morgan State University (Aug 2023 - Present)')">
+            <div class="field-label">Dean's List</div>
+            <div class="field-value">Dean's List, Morgan State University (Aug 2023 - Present)</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Amazon AI/ML HBCU Symposium - Selected Presenter (Sep 2025)')">
+            <div class="field-label">Amazon AI/ML Symposium</div>
+            <div class="field-value">Amazon AI/ML HBCU Symposium - Selected Presenter (Sep 2025)</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'NSF Conference - Invited Speaker (Jun 2025)')">
+            <div class="field-label">NSF Conference</div>
+            <div class="field-value">NSF Conference - Invited Speaker (Jun 2025)</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Yale AI Symposium - Presenter (May 2024)')">
+            <div class="field-label">Yale AI Symposium</div>
+            <div class="field-value">Yale AI Symposium - Presenter (May 2024)</div>
+        </div>
+    </div>
+
+    <!-- COURSEWORK -->
+    <h2>Relevant Coursework</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'AI/ML, Data Structures & Algorithms, Cybersecurity, OOP, Database Design, Software Engineering, Statistics and Probability, Cryptography')">
+            <div class="field-label">All Coursework</div>
+            <div class="field-value">AI/ML, Data Structures, Cybersecurity, OOP, Database Design, Software Engineering...</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Artificial Intelligence / Machine Learning')">
+            <div class="field-label">AI/ML</div>
+            <div class="field-value">Artificial Intelligence / Machine Learning</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Data Structures & Algorithms')">
+            <div class="field-label">Data Structures</div>
+            <div class="field-value">Data Structures & Algorithms</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Software Engineering')">
+            <div class="field-label">Software Engineering</div>
+            <div class="field-value">Software Engineering</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Database Design')">
+            <div class="field-label">Database Design</div>
+            <div class="field-value">Database Design</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Cybersecurity')">
+            <div class="field-label">Cybersecurity</div>
+            <div class="field-value">Cybersecurity</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Cryptography')">
+            <div class="field-label">Cryptography</div>
+            <div class="field-value">Cryptography</div>
+        </div>
+    </div>
+
+    <h2>Common Yes/No Answers</h2>
+    <div class="grid">
+        <div class="field" onclick="copyText(this, 'Yes')">
+            <div class="field-label">Yes</div>
+            <div class="field-value">Yes</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'No')">
+            <div class="field-label">No</div>
+            <div class="field-value">No</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Yes, I am 18 years of age or older')">
+            <div class="field-label">18+ Years Old</div>
+            <div class="field-value">Yes, I am 18 years of age or older</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Yes, I have reliable transportation')">
+            <div class="field-label">Transportation</div>
+            <div class="field-value">Yes, I have reliable transportation</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Yes, I am willing to relocate')">
+            <div class="field-label">Willing to Relocate</div>
+            <div class="field-value">Yes, I am willing to relocate</div>
+        </div>
+        <div class="field" onclick="copyText(this, 'Yes, I agree to a background check')">
+            <div class="field-label">Background Check</div>
+            <div class="field-value">Yes, I agree to a background check</div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">Copied!</div>
+
+    <script>
+        function copyText(element, text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // Visual feedback
+                element.classList.add('copied');
+                setTimeout(() => element.classList.remove('copied'), 300);
+
+                // Show toast
+                const toast = document.getElementById('toast');
+                toast.style.display = 'block';
+                setTimeout(() => toast.style.display = 'none', 1500);
+            });
+        }
+    </script>
+</body>
+</html>
